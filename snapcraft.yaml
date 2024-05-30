@@ -1,0 +1,41 @@
+name: keepboard
+title: Keepboard
+summary: Clipboard manager
+description: |
+  Keepboard is a free open source clipboard manager that can save clipboard history
+  (either automatically or on-demand) and provides the ability to quickly search
+  and paste clipboard items copied in the past.
+  It supports text, image and file clipboard items and stores all data locally
+  (does not require any network access nor disk access apart from its snap-confined directory).
+  Keepboard has been tested on Linux (GNOME, KDE...), Mac OS and Windows platforms.
+version: '5.7'
+icon: snap/gui/myIcon.png
+
+base: core18
+confinement: strict
+license: GPL-3.0
+
+apps:
+  keepboard:
+    extensions:
+      - gnome-3-28
+    command: java -jar $SNAP/jar/jar.jar
+    environment:
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
+      PATH: $JAVA_HOME/jre/bin:$PATH
+    autostart: keepboard.desktop
+
+parts:
+  keepboard:
+    plugin: maven
+    source: .
+    build-packages:
+      - openjdk-11-jre
+    stage-packages:
+      - openjdk-11-jre
+      - ca-certificates-java
+      - ca-certificates
+      - libx11-dev
+    prime:
+      - -usr/lib/jvm/java-*/lib/security/cacerts
+      - -usr/lib/jvm/java-*/lib/security/blacklisted.certs

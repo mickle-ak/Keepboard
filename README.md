@@ -10,7 +10,6 @@ Note: It is a fork from https://sourceforge.net/projects/keepboard/!
 
 To start: java -jar jar.jar
 
-
 Screenshots (from https://sourceforge.net/projects/keepboard/):
 
 ![Image 2](https://a.fsdn.com/con/app/proj/keepboard/screenshots/1.png/max/max/1)

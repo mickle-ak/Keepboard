@@ -1,4 +1,4 @@
-
+syntax: glob
 
 # General files and folders
 tmp/
@@ -6,7 +6,6 @@ target/
 target_sbt/
 .cache/
 .history
-dependency-reduced-pom.xml
 
 # Eclipse
 tmp/
@@ -54,8 +53,8 @@ nb-configuration.xml
 .ensime.*
 
 # Keepboard history
-/history
-/prefs
+history/
+prefs/
 
 # Snap
 *.snap
