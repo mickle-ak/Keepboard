@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=keepboard
+Hidden=false
+NoDisplay=false
+Name[en_US]=keepboard
+Name=keepboard
+Icon=${SNAP}/meta/gui/myIcon.png
