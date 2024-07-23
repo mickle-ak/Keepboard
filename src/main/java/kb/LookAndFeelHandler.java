@@ -5,6 +5,11 @@ import kb.gui.prefs.LookAndFeelPref;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.plaf.FontUIResource;
+
+import java.util.Map;
+
+import static javax.swing.UIManager.*;
 
 
 public class LookAndFeelHandler {
@@ -48,11 +53,26 @@ public class LookAndFeelHandler {
 	private void setLookAndFeel(String className) {
 		try {
 			UIManager.setLookAndFeel(className);
+			setFont();
 		} catch (Exception e) {
 			// Ignored
 		}
 	}
-	
+
+	private static void setFont() {
+		float fontSize = 16f;
+		for (Map.Entry<Object, Object> entry : getDefaults().entrySet()) {
+			Object key = entry.getKey();
+			Object value = get(key);
+			if(value instanceof FontUIResource) {
+				FontUIResource fr = (FontUIResource) value;
+				FontUIResource f = new FontUIResource(fr.deriveFont(fontSize));
+				put(key, f);
+			}
+		}
+	}
+
+
 	public void updateLookAndFeel(LookAndFeelPref lookAndFeelPref) {
 		setLookAndFeel(lookAndFeelPref);
 		MainFrame.reinitMainFrame();

@@ -9,7 +9,7 @@ import java.util.List;
 public class MyTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 	
-	private List<TableCellDecorator> decorators = new ArrayList<TableCellDecorator>();
+	private final List<TableCellDecorator> decorators = new ArrayList<>();
 	
 	public MyTableCellRenderer() {
 		this.putClientProperty("html.disable", Boolean.TRUE);
@@ -30,7 +30,13 @@ public class MyTableCellRenderer extends DefaultTableCellRenderer {
 		for (TableCellDecorator decorator : decorators) {
 			decorator.decorate(component, table, value, isSelected, hasFocus, row, column);
 		}
+		updateRowHeight(component, table, row);
 	}
+
+	private void updateRowHeight(Component component, JTable table, int row) {
+		table.setRowHeight(row, component.getPreferredSize().height);
+	}
+
 
 	public void addDecorator(TableCellDecorator decorator) {
 		this.decorators.add(decorator);

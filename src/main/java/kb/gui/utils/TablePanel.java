@@ -90,6 +90,7 @@ public class TablePanel<M extends TableModel> extends JPanel {
 	private void adjustTable() {
 		table.setDefaultRenderer(String.class, createTableCellRenderer());
 		table.setShowGrid(false);
+		table.setRowMargin(3);
 	}
 
 	private TableCellRenderer createTableCellRenderer() {
