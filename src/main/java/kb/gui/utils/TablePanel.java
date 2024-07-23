@@ -159,7 +159,7 @@ public class TablePanel<M extends TableModel> extends JPanel {
 	}
 	
 	private void refreshFirst10Rows() {
-		int n = table.getRowCount() > 10 ? 10 : table.getRowCount();
+		int n = Math.min(table.getRowCount(), 10);
 		for (int i = 0; i < n; i++) {
 			int row = table.convertRowIndexToModel(i);
 			((AbstractTableModel) table.getModel()).fireTableRowsUpdated(row, row);
@@ -245,21 +245,27 @@ public class TablePanel<M extends TableModel> extends JPanel {
 	}
 
 	private void handleTableSelectionHomeEndKeys(KeyEvent e) {
-		if (!e.isControlDown() || table.getRowCount() == 0) {
+		if (table.getRowCount() == 0) {
 			return;
 		}
 		
 		int newSelectedRow;
 		
 		switch(e.getKeyCode()) {
-		case KeyEvent.VK_HOME:
-			newSelectedRow = 0;
-			break;
-		case KeyEvent.VK_END:
-			newSelectedRow = table.getRowCount() - 1;
-			break;
-		default:
-			return;
+			case KeyEvent.VK_PAGE_UP:
+				newSelectedRow = Math.max(0, table.getSelectedRow() - getNumberOfVisibleRows());
+				break;
+			case KeyEvent.VK_PAGE_DOWN:
+				newSelectedRow = Math.min(table.getRowCount() - 1, table.getSelectedRow() + getNumberOfVisibleRows());
+				break;
+			case KeyEvent.VK_HOME:
+				newSelectedRow = 0;
+				break;
+			case KeyEvent.VK_END:
+				newSelectedRow = table.getRowCount() - 1;
+				break;
+			default:
+				return;
 		}
 		
 		if (!e.isShiftDown()) {
@@ -273,6 +279,10 @@ public class TablePanel<M extends TableModel> extends JPanel {
 		}
 		
 		selectTableRowsIntervalAccordingToRootSelectedRow(rootSelectedRow, newSelectedRow);
+	}
+
+	public int getNumberOfVisibleRows() {
+		return (int) (Math.min(table.getSize().getHeight(), scrollPane.getHeight()) / (table.getRowHeight() + 2 * table.getRowMargin()));
 	}
 
 	private void handleTableSelectionArrowKeys(KeyEvent e) {
