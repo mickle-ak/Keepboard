@@ -6,9 +6,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableRowSorter;
 
 public class TableTextFieldFilter {
-	private JTextField textField;
-	private TableRowSorter<?> tableRowSorter;
-	private int filterColumn;
+	private final JTextField textField;
+	private final TableRowSorter<?> tableRowSorter;
+	private final int filterColumn;
 	private String filterText;
 	
 	public TableTextFieldFilter(JTextField textField, TableRowSorter<?> tableRowSorter, int filterColumn) {
@@ -33,7 +33,7 @@ public class TableTextFieldFilter {
 					return false;
 				}
 				
-				return value.substring(0, filterText.length()).equalsIgnoreCase(filterText);
+				return value.toLowerCase().contains(filterText.toLowerCase());
 			}
 			
 		};
